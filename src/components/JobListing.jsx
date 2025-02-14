@@ -3,9 +3,10 @@ import { FaMapMarker } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 const JobListing = ({ job }) => {
+  // this will let the first bit  of description to be shown and then the full description to be shown when the button is clicked
   const [showFullDescription, setShowFullDescription] = useState(false);
 
-  let description = job.description;
+  let description = job.description;{/* is being pulled from the job json */}
 
   if (!showFullDescription) {
     description = description.substring(0, 90) + '...';
@@ -22,9 +23,10 @@ const JobListing = ({ job }) => {
         <div className='mb-5'>{description}</div>
 
         <button
+        // onclick is the jsx version of an event listener, () => is important so that the function is not called immediately 
           onClick={() => setShowFullDescription((prevState) => !prevState)}
-          className='text-indigo-500 mb-5 hover:text-indigo-600'
-        >
+          className='text-indigo-500 mb-5 hover:text-indigo-600'>
+            {/* we want to allow the user to know when there is more text to be seen  */}
           {showFullDescription ? 'Less' : 'More'}
         </button>
 
@@ -35,16 +37,16 @@ const JobListing = ({ job }) => {
         <div className='flex flex-col lg:flex-row justify-between mb-4'>
           <div className='text-orange-700 mb-3'>
             <FaMapMarker className='inline text-lg mb-1 mr-1' />
-            {job.location}
+            {job.location}{/* is being pulled from the job json */}
           </div>
-        <a
-        href={`/job/${job.id}`}
+        <Link
+        to={`/job/${job.id}`}
         className="h-[36px] bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded-lg text-center text-sm"
-      ></a>
+      ></Link>
       </div>
     </div>
   </div>
   )
 }
-
+{/* this let's us call the function in app.jsx */}
 export default JobListing

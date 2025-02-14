@@ -145,7 +145,91 @@ Add the following code to define the Hero component:
         <section className="bg-blue-500 text-white py-20">
           <div className="container mx-auto text-center">
             <h1 className="text-5xl font-bold mb-4">Welcome to MyApp</h1>
-            <p className="text-xl mb-8">Find your dream job or the perfect candidate</p>
+            <p className="text-xl mb-8">Find your dream job or the perfect candidate</p>http://localhost:3000/src/components/HomeCards.jsx?t=1739393950695 net::ERR_ABORTED 500 (Internal Server Error)
+importUpdatedModule @ client:848
+fetchUpdate @ client:201
+queueUpdate @ client:176
+(anonymous) @ client:883
+handleMessage @ client:881
+onMessage @ client:298
+(anonymous) @ client:428Understand this errorAI
+client:835 [vite] Failed to reload /src/components/HomeCards.jsx. This could be due to syntax errors or importing non-existent modules. (see errors above)
+overrideMethod @ hook.js:608
+error @ client:835
+warnFailedUpdate @ client:166
+fetchUpdate @ client:203
+await in fetchUpdate
+queueUpdate @ client:176
+(anonymous) @ client:883
+handleMessage @ client:881
+onMessage @ client:298
+(anonymous) @ client:428Understand this errorAI
+client:848 
+        
+        
+       GET http://localhost:3000/src/components/HomeCards.jsx?t=1739394086450 net::ERR_ABORTED 500 (Internal Server Error)
+importUpdatedModule @ client:848
+fetchUpdate @ client:201
+queueUpdate @ client:176
+(anonymous) @ client:883
+handleMessage @ client:881
+onMessage @ client:298
+(anonymous) @ client:428Understand this errorAI
+client:835 [vite] Failed to reload /src/components/HomeCards.jsx. This could be due to syntax errors or importing non-existent modules. (see errors above)
+overrideMethod @ hook.js:608
+error @ client:835
+warnFailedUpdate @ client:166
+fetchUpdate @ client:203
+await in fetchUpdate
+queueUpdate @ client:176
+(anonymous) @ client:883
+handleMessage @ client:881
+onMessage @ client:298
+(anonymous) @ client:428Understand this errorAI
+client:848 
+        
+        
+       GET http://localhost:3000/src/components/HomeCards.jsx?t=1739394089076 net::ERR_ABORTED 500 (Internal Server Error)
+importUpdatedModule @ client:848
+fetchUpdate @ client:201
+queueUpdate @ client:176
+(anonymous) @ client:883
+handleMessage @ client:881
+onMessage @ client:298
+(anonymous) @ client:428Understand this errorAI
+client:835 [vite] Failed to reload /src/components/HomeCards.jsx. This could be due to syntax errors or importing non-existent modules. (see errors above)
+overrideMethod @ hook.js:608
+error @ client:835
+warnFailedUpdate @ client:166
+fetchUpdate @ client:203
+await in fetchUpdate
+queueUpdate @ client:176
+(anonymous) @ client:883
+handleMessage @ client:881
+onMessage @ client:298
+(anonymous) @ client:428Understand this errorAI
+client:848 
+        
+        
+       GET http://localhost:3000/src/components/HomeCards.jsx?t=1739394109328 net::ERR_ABORTED 500 (Internal Server Error)
+importUpdatedModule @ client:848
+fetchUpdate @ client:201
+queueUpdate @ client:176
+(anonymous) @ client:883
+handleMessage @ client:881
+onMessage @ client:298
+(anonymous) @ client:428Understand this errorAI
+client:835 [vite] Failed to reload /src/components/HomeCards.jsx. This could be due to syntax errors or importing non-existent modules. (see errors above)
+overrideMethod @ hook.js:608
+error @ client:835
+warnFailedUpdate @ client:166
+fetchUpdate @ client:203
+await in fetchUpdate
+queueUpdate @ client:176
+(anonymous) @ client:883
+handleMessage @ client:881
+onMessage @ client:298
+(anonymous) @ client:428Understand this errorAI
             <a href="/jobs" className="bg-white text-blue-500 px-6 py-3 rounded-lg font-semibold hover:bg-gray-200">
               Browse Jobs
             </a>
@@ -454,3 +538,263 @@ Final Touches:
 
 Ensure all components are properly connected and functional.
 Test the application to ensure everything works as expected.
+
+/file jobListing.jsx        
+    add import { useState } from 'react';
+    ////////this will let the first bit  of description to be shown and then the full description to be shown when the button is clicked
+    const JobListing = ({ job }) => {
+        const [showFullDescription, setShowFullDescription] = useState(false);
+      
+        let description = job.description;
+      
+        if (!showFullDescription) {
+          description = description.substring(0, 90) + '...';
+        }
+        /////
+        <button
+        //// onclick is the jsx version of an event listener, () => is important so that the function is not called immediately 
+        onClick={() => setShowFullDescription((prevState) => !prevState)}
+        className='text-indigo-500 mb-5 hover:text-indigo-600'>
+        ///// we want to allow the user to know when there is more text to be seen 
+        {showFullDescription ? 'Less' : 'More'}
+      </button>
+
+///////////////////////////////////
+font awesome
+npm install react-icons
+/file:src/components/JobListing.jsx
+import { FaMapMarker } from 'react-icons/fa';
+<div className='text-orange-700 mb-3'>
+    <FaMapMarker  />/// then add className='inline text-lg mb-1 mr-1'
+    {job.location}{/* is being pulled from the job json */}
+  </div>
+  ////////////////////////////////
+  //to add more pages add a router react has a module for that.
+  npm i react-router-dom
+  file: src/App.jsx
+    import {Route, createBrowserHistory,createRoutesFromElements, RouterProvider, createBrowserRouter} from "react-router-dom";
+    const router = createBrowserRouter(
+  createRoutesFromElements(<Route index element={<h1>My App</h1>} />)/// index could havebeen replaced a with path='/' 
+);
+//next we ill add the provider
+////un-embed this :(
+    <>
+      <Navbar/>
+      <Hero />
+      <HomeCards />
+      <JobListings />
+    </>
+    )
+  } 
+
+  ////
+  const App = () => {
+    // now to move between the pages we need to use the router provider/
+  return <RouterProvider router={router}/>;
+};
+
+//// now to make component pages folder with HomePage.jsx
+remove:
+import Navbar from "./components/Navbar";
+import Hero from "./components/Hero";
+import HomeCards from "./components/HomeCards";
+import JobListings from "./components/JobListings";
+import ViewAllJobs from "./components/ViewAllJobs";
+////
+add import HomePage from "./pages/HomePage";
+update to take us to the homepage:
+createRoutesFromElements(<Route index element={<HomePage />} />)
+//// file: src/pages/HomePage.jsx
+import Hero from "../components/Hero";
+embed to the return : <Hero />
+
+/////create src/layouts/ MainLayout.jsx
+these are the components that are shared between the pages
+///outlet s where the nested routes will be rendered
+import { Outlet } from "react-router-dom";
+const MainLayout = () => {
+  return (
+    <div>MainLayout</div>
+  )
+}
+
+export default MainLayout
+///file: app.jsx
+import MainLayout from "./layouts/MainLayout";
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    ///these routes will now be used in the nested layout
+    <Route path="/" element={<MainLayout />}>
+      <Route index element={<HomePage />} />
+    </Route>;
+  )
+);
+
+//////////file: src/layouts/ MainLayout.jsx
+add the embed Navbar
+import NavBar from "../components/NavBar";
+return (
+    <>
+    <NavBar />
+      <Outlet />
+      
+    </>
+  );
+  /////file:src/components/HomePage.jsx
+  //add the components to the pages that it needs
+    import Hero from "../components/Hero";
+    import HomeCards from "../components/HomeCards";
+    import JobListings from "../components/JobListings";
+    import ViewAllJobs from "../components/ViewAllJobs";
+
+    const HomePage = () => {
+      return (
+
+        <>
+            <Hero />
+            <HomeCards />
+            <JobListings />
+            <ViewAllJobs />
+        </>
+      )
+    }
+    //////now work flow is to create a new page and add it to the app.jsx file
+    ////create pages/JobsPage.jsx
+    import Hero from "../components/Hero";
+    import HomeCards from "../components/HomeCards";
+    import JobListings from "../components/JobListings";
+    import ViewAllJobs from "../components/ViewAllJobs";
+
+const JobsPage = () => {
+      return (
+    
+        <>
+            <Hero />
+            <HomeCards />
+            <JobListings />
+            <ViewAllJobs />
+        </>
+      )
+    }
+export default JobsPage
+////////file app.jsx
+import JobsPage from "./pages/JobsPage";
+AND 
+createRoutesFromElements(
+    <Route path="/" element={<MainLayout />}>
+      <Route index element={<HomePage />} />
+       //////this is like node.js routing path 
+      <Route path="/jobs" element={<JobsPage />} />
+    </Route>
+    );
+/////////// file: navbar.jsx
+//remove the html from the archor tags and replace with 'Link' and 'to' so that the page does not refresh
+import { Link } from 'react-router-dom'
+<Link
+to="/"
+>Home</Link
+>
+<Link
+to="/jobs"
+
+>Jobs</Link
+>
+<Link
+href="/add-job"
+>Add Job</Link
+>
+      ////file: src/components/HomeCards.jsx
+      remove the html from the archor tags and replace with link so that the page does not refresh
+      import { Link } from 'react-router-dom'
+
+      <Link
+        to="/jobs"
+      ></Link>
+      </Card>
+      <Card>
+        <Link
+          to="/add-job"
+        ></Link>
+        ///file : src/components/JobListing.jsx
+        import { Link } from 'react-router-dom';
+        <Link
+        to={`/job/${job.id}`}
+        
+      ></Link>
+      ///////////create pages/NotFoundPage.jsx
+      ///to handle 404 errors
+      import { Link } from "react-router-dom"
+const NotFoundPage = () => {
+  return (
+    <section  className="text-center flex flex-col justify-center items-center h-96">
+    ///////<s><i class="fas fa-exclamation-triangle text-yellow-400 fa-4x mb-4"></i></s>
+    <FaExclamationTriangle className="text-yellow-400 text-6xl mb-4" />;////all the class need to change to className
+    <h1 className="text-6xl font-bold mb-4">404 Not Found</h1>
+    <p className="text-xl mb-5">This page does not exist</p>
+    <Link
+      to="/"
+      className="text-white bg-indigo-700 hover:bg-indigo-900 rounded-md px-3 py-2 mt-4"
+      >Go Back</Link
+    >
+  </section>
+  )
+}
+
+export default NotFoundPage
+
+////file: app.jsx
+import NotFoundPage from "./pages/NotFoundPage";
+//path * is catchall for any other route that is not defined
+<Route path="*" element={<NotFoundPage />} />
+// file: sr/componant/Narbar.jsx
+//instead of Link use NavLink to add active class
+///as  of right now the HOme button is active/depressed. so we need to add the active class to the other buttons
+import { NavLink } from "react-router-dom";
+replace Link with NavLink with ctrl-f.
+<NavLink
+to="/"
+className="text-white bg-black hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"
+>Home</NavLink
+>
+<NavLink
+to="/jobs"
+className="text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"
+>Jobs</NavLink
+>
+<NavLink
+href="/add-job"
+className="text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"
+>Add Job</NavLink
+>
+// navlink adds a dynamic element to the sight
+///file : JobsPage.jsx
+//add JobListings to the JobsPage
+import JobListings from "../components/JobListings";
+
+const JobsPage = () => {
+      return <section className="bg-blue-50 px-4 py-6">
+        <JobListings />
+      </section>;
+    }
+export default JobsPage
+// but the problem is that only 3 jobs are being shown.
+////file : src/components/JobListings.jsx
+add a prop to : 
+//// is added   >> isHome = false
+//// recentJobs >> jobListings
+const JobListings = ({isHome =false}) => {
+  const jobListings = isHome ? jobs.slice(0,3); : jobs;
+///note he didn't have to rename recentJobs
+{jobListings.map((job) => (////recentjobs >>jobListings
+  ///but now home page still shows all the jobs.
+  //file: src/pages/HomePage.jsx
+  //add the prop to the JobListings component
+  <JobListings isHome={true} />
+  //file: src/pages/JobsListings.jsx
+  make the header dynamic
+///time to make a backend
+///run: npm i json-server
+//file: package.json
+//add to scripts:
+, "server": "json-server --watch src/jobs.json --port 8000"
